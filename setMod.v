@@ -29,14 +29,14 @@ timer
     );
     
 input [1:0] mod;
-output reg [3:0] timer;
+output reg [4:0] timer;
 
 always @ (mod) begin
     case (mod)
-        0: timer = 4'd14;
-        1: timer = 4'd10;
-        2: timer = 4'd8;
-        3: timer = 4'd6;
+        0: timer = 5'd14;
+        1: timer = 5'd10;
+        2: timer = 5'd8;
+        3: timer = 5'd6;
     endcase
 end
 endmodule
