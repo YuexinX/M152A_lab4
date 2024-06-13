@@ -22,21 +22,26 @@
 
 module setMod(
 //input
-mod,
+mod, start
 //output
 timer
 
     );
     
 input [1:0] mod;
+input start;
 output reg [4:0] timer;
 
 always @ (mod) begin
-    case (mod)
-        0: timer = 5'd14;
-        1: timer = 5'd10;
-        2: timer = 5'd8;
-        3: timer = 5'd6;
-    endcase
+    if (start) begin
+        case (mod)
+            0: timer = 5'd14;
+            1: timer = 5'd10;
+            2: timer = 5'd8;
+            3: timer = 5'd6;
+        endcase
+    end
+    else
+        timer = 5'd10;
 end
 endmodule
