@@ -13,7 +13,7 @@ module top(
     input tick_hr,
     input start,
     input [7:0] sw,          // btnL
-    input tick_min,         // btnR
+    input [1:0] mod,
     output hsync,           // to VGA Connector
     output vsync,           // to VGA Connector
     output [11:0] rgb       // to DAC, to VGA Connector
@@ -25,7 +25,13 @@ module top(
     wire [3:0] hr_10s, hr_1s, min_10s, min_1s, sec_10s, sec_1s, c1_01, c2_02;
     reg [11:0] rgb_reg;
     wire [11:0] rgb_next;
-    
+    wire [4:0] counter;
+    wire 1hz_clk;
+
+    setClk SetClk(.sys_clk(clk_100MHz), .rst(reset), .sec_clk(1hz_clk));
+
+    setMod SetMod(.mod(mod), .start(start), .timer(counter));
+
     // Instantiate Modules
     vga_controller vga(
         .clk_100MHz(clk_100MHz),
@@ -40,13 +46,16 @@ module top(
  
 wire [7:0] display_answer;
 wire [4:0] score;
-game play(
-.clk_100MHz(clk_100MHz),
-.reset(reset),
-.sw(sw),
-.start(start),
-.answer(display_answer),
-.score(score)
+    
+module game(
+    .clk_100MHz(clk_100MHz),
+    .1HZ_clk(1hz_clk),
+    .reset(reset),
+    .sw(sw),
+    .start(start),
+    .timer(counter),
+    .answer(display_answer),
+    .score(score)
     );
 
 
