@@ -26,6 +26,7 @@ input 1HZ_clk,
 input reset,
 input [7:0] sw,
 input start,
+input [4:0] timer,
 output [7:0] answer,
 output [4:0] score
     );
@@ -59,7 +60,7 @@ output [4:0] score
                    answer_temp <= randomNum;
                    score_temp <= score+1;
                end
-                if (count == 8) begin
+                if (count == timer) begin
                     count <= 4'b0;
                     round <= round+1;
                 end
